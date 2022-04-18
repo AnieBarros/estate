@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>      
+    <record id="test_model_action" model="ir.actions.act_window">
+        <field name="name">Imóvel</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+<record id="model_name_view_tree" model="ir.ui.view">
+    <field name="name">tree last seen</field>
+    <field name="model">estate.property</field>
+    <field name="arch" type="xml">
+        <tree string="estate property">
+        <field name="name"/>
+        <field name="last_seen"/>
+        </tree>
+    </field>
+</record>
+
+<record id="model_name_view_form" model="ir.ui.view">
+<field name="name">Form last seen</field>
+<field name="model">estate.property</field>
+<field name="arch" type="xml">
+<form string="Test">
+    <sheet>
+        <group>
+            <group>
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="date_availability"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/>
+                <field name="garage"/>
+            </group>
+            <group>
+                <field name="last_seen"/>
+                <field name="garden"/>
+                <field name="garden_area"/>
+               <field name="garden_orientation"/>
+                <field name="active"/>
+                <field name="property_type_id"/>
+                <field name="salesman_id"/>
+                <field name="buyer_id"/>
+                <field name="state"/>
+                <field name="total_area"/>
+                <field name="tag_ids"/> 
+                <field name="offer_ids"/>
+                <field name="best_price"/>
+            </group>
+            <notebook>
+                <page string="Description">
+                    <field name="description"/>
+                </page>
+            </notebook>
+        </group>
+    </sheet>
+</form>
+</field>
+</record>
+
+<record id="model_name_view_search" model="ir.ui.view">
+    <field name="name">model_name.view.search</field>
+    <field name="model">estate.property</field>
+    <field name="arch" type="xml">
+        <search string="Tests">
+        <filter name="filtro_ofertas" string="Postcode" domain="['|',('state', '=', 'Oferta recebida'),('state', '=', 'Novo')]" context="{'group_by': 'postcode'}" />
+            <field name="name"/>
+            <field name="last_seen"/>
+        </search>
+    </field>
+</record>
+</odoo>
