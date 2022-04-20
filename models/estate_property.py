@@ -37,7 +37,10 @@ class EstateProperty(models.Model):
     @api.depends('offer_ids')
     def _compute_best_price(self):
         for rec in self:
-            rec.best_price = max(rec.offer_ids.mapped('price'))
+            if rec.offer_ids:
+                rec.best_price = max(rec.offer_ids.mapped('price'))
+            else:
+                rec.best_price = 0
     
     state = fields.Selection(
         selection=[
@@ -98,9 +101,32 @@ class EstatePropertyOffer(models.Model):
         ],
         string="Status",
         copy=False,
-        default="Desconhecido",
    
 )
     partner_id=fields.Many2one('res.partner', required=True, string="Id Salesman")
     property_id=fields.Many2one('estate.property', required=True, string="Property Id")
-  
+    validity=fields.Integer(default=7, string="Validity")
+    date_deadline=fields.Date(string="Date Deadline", store=True, compute="_compute_deadline", inverse="_inverse_deadline", default=lambda self: fields.Datetime.today().date())
+
+    @api.depends('validity', 'create_date')
+    def _compute_deadline(self):
+        for rec in self:
+            if rec.create_date:
+                rec.date_deadline=rec.create_date + relativedelta(days=rec.validity)
+            else:
+                rec.date_deadline=date.today() + relativedelta(days=rec.validity)
+
+    def _inverse_deadline(self):
+        for rec in self:
+            if not (rec.create_date and rec.date_deadline): continue
+            else:
+                rec.validity = int ((rec.date_deadline - (rec.create_date).date()).days)
+
+
+            
+
+            
+
+
+
+    
