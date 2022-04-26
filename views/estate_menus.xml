@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="estate_property_menu_root" name="Estate Property" action="test_model_action">
-            <menuitem id="menu_property_type" name="Aplicação">
-                <menuitem id="aplicacao_menu" name="Ação">
-                    <menuitem id="action_property_type" action="model_action" name="Estate Property Type" />
-                        <menuitem id="action_tag" name="Estate Property Tag" action="tag_model_action"/>
-                            <menuitem id="estate_property_offer_menu_root" name="Estate Property Offer" action="offer_model_action"/>
-                </menuitem>
-            </menuitem>
+    <!-- Top menu item -->
+    <menuitem id="estate_menu_root" name="Real Estate">
+        <menuitem id="estate_advertisement_menu" name="Avaliação" sequence="5">
+            <menuitem id="estate_property_menu_action" action="estate_property_action" sequence="5"/>
+        </menuitem>
+        <menuitem id="estate_settings_menu" name="Configurações" sequence="10">
+            <menuitem id="estate_property_type_menu_action" action="estate_property_type_action" sequence="5"/>
+            <menuitem id="estate_property_tag_menu_action" action="estate_property_tag_action" sequence="10"/>
+        </menuitem>
     </menuitem>
 </odoo>
