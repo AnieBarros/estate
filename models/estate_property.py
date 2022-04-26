@@ -22,7 +22,6 @@ class EstateProperty(models.Model):
     def _default_date_availability(self):
         return fields.Date.context_today(self) + relativedelta(months=3)
 
-<<<<<<< HEAD
 # --------------------------------------- Declaração de Campos ----------------------------------
 =======
     name = fields.Char(String="name", default="Novo")
@@ -56,7 +55,6 @@ class EstateProperty(models.Model):
                 rec.best_price = max(rec.offer_ids.mapped('price'))
             else:
                 rec.best_price = 0
->>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
     
     # Básicos
     name = fields.Char("Nome", required=True)
@@ -247,7 +245,6 @@ class EstatePropertyOffer(models.Model):
         ],
         string="Status",
         copy=False,
-<<<<<<< HEAD
         default=False
    
 )
@@ -262,7 +259,6 @@ class EstatePropertyOffer(models.Model):
     date_deadline=fields.Date(string="Data de Vencimento", store=True, compute="_compute_deadline", inverse="_inverse_deadline", default=lambda self: fields.Datetime.today().date())
  
  # ---------------------------------------- Métodos Computados ------------------------------------
-=======
    
 )
     partner_id=fields.Many2one('res.partner', required=True, string="Id Salesman")
@@ -270,7 +266,6 @@ class EstatePropertyOffer(models.Model):
     validity=fields.Integer(default=7, string="Validity")
     date_deadline=fields.Date(string="Date Deadline", store=True, compute="_compute_deadline", inverse="_inverse_deadline", default=lambda self: fields.Datetime.today().date())
 
->>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
     @api.depends('validity', 'create_date')
     def _compute_deadline(self):
         for rec in self:
@@ -285,7 +280,6 @@ class EstatePropertyOffer(models.Model):
             else:
                 rec.validity = int ((rec.date_deadline - (rec.create_date).date()).days)
 
-<<<<<<< HEAD
 # ------------------------------------------ Métodos CRUD -------------------------------------
     @api.model
     def create(self, vals):
@@ -331,13 +325,7 @@ class ResUsers(models.Model):
     property_ids = fields.One2many(
         "estate.property", "user_id", string="Properties", domain=[("state", "in", ["novo", "oferta recebida"])]
     )
-=======
 
-            
-
-            
-
->>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
 
 
     
