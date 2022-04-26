@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "name": "Real Estate",
     "depends": [
@@ -15,3 +16,17 @@
     ],
     "application": True,
 }
+=======
+{ 'name': 'estate',
+
+'data':[
+    'security/ir.model.access.csv',
+    'views/property_type_views.xml',
+    'views/estate_property_views.xml',
+    'views/property_tag_views.xml',
+    'views/property_offer_views.xml',
+    'views/estate_menus.xml',
+    ]
+} 
+
+>>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3

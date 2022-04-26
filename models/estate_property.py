@@ -22,7 +22,41 @@ class EstateProperty(models.Model):
     def _default_date_availability(self):
         return fields.Date.context_today(self) + relativedelta(months=3)
 
+<<<<<<< HEAD
 # --------------------------------------- Declaração de Campos ----------------------------------
+=======
+    name = fields.Char(String="name", default="Novo")
+    description = fields.Text(String="description")
+    last_seen = fields.Datetime("Last Seen", default=lambda self: fields.Datetime.now())
+    postcode = fields.Char(String="postcode")
+    date_availability = fields.Date(
+        "Available From", default=lambda self: self._default_date_availability(), copy=False)
+    expected_price = fields.Float(String="Expected Price")
+    selling_price = fields.Float(String="Selling Price", copy=False, readonly=True)
+    bedrooms = fields.Integer(String="Bedrooms", default=2)
+    living_area = fields.Integer(String="Living Area")
+    facades = fields.Integer(String="Facades")
+    garage = fields.Boolean(String="Garage")
+    garden = fields.Boolean(String="Garden")
+    garden_area = fields.Integer(String="Garden Area")
+    garden_orientation = fields.Selection(string='Garden Orientation',
+       selection=[('north', 'North'), ('south', 'South'),  ('east', 'East'),  ('west', 'West')])
+    active = fields.Boolean("Active", default=True)
+    property_type_id = fields.Many2one("estate.property.type", string="Property Type")
+    salesman_id = fields.Many2one('res.users', string='Salesman', default=lambda self: self.env.user)
+    buyer_id = fields.Many2one('res.partner', string='Buyer', default=lambda self: self.env['res.partner'])
+    tag_ids = fields.Many2many("estate.property.tag", string="Tags")
+    offer_ids = fields.One2many('estate.property.offer','property_id', string="Offers")
+    best_price = fields.Float(string='Best Offer', compute='_compute_best_price')
+
+    @api.depends('offer_ids')
+    def _compute_best_price(self):
+        for rec in self:
+            if rec.offer_ids:
+                rec.best_price = max(rec.offer_ids.mapped('price'))
+            else:
+                rec.best_price = 0
+>>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
     
     # Básicos
     name = fields.Char("Nome", required=True)
@@ -213,6 +247,7 @@ class EstatePropertyOffer(models.Model):
         ],
         string="Status",
         copy=False,
+<<<<<<< HEAD
         default=False
    
 )
@@ -227,6 +262,15 @@ class EstatePropertyOffer(models.Model):
     date_deadline=fields.Date(string="Data de Vencimento", store=True, compute="_compute_deadline", inverse="_inverse_deadline", default=lambda self: fields.Datetime.today().date())
  
  # ---------------------------------------- Métodos Computados ------------------------------------
+=======
+   
+)
+    partner_id=fields.Many2one('res.partner', required=True, string="Id Salesman")
+    property_id=fields.Many2one('estate.property', required=True, string="Property Id")
+    validity=fields.Integer(default=7, string="Validity")
+    date_deadline=fields.Date(string="Date Deadline", store=True, compute="_compute_deadline", inverse="_inverse_deadline", default=lambda self: fields.Datetime.today().date())
+
+>>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
     @api.depends('validity', 'create_date')
     def _compute_deadline(self):
         for rec in self:
@@ -241,6 +285,7 @@ class EstatePropertyOffer(models.Model):
             else:
                 rec.validity = int ((rec.date_deadline - (rec.create_date).date()).days)
 
+<<<<<<< HEAD
 # ------------------------------------------ Métodos CRUD -------------------------------------
     @api.model
     def create(self, vals):
@@ -286,6 +331,13 @@ class ResUsers(models.Model):
     property_ids = fields.One2many(
         "estate.property", "user_id", string="Properties", domain=[("state", "in", ["novo", "oferta recebida"])]
     )
+=======
+
+            
+
+            
+
+>>>>>>> b9dc4f1432676a714a0326e675b0810a955782c3
 
 
     
