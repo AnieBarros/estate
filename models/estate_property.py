@@ -312,4 +312,6 @@ class EstatePropertyOffer(models.Model):
 
     def action_recusar(self):
         return self.write({"state": "recusado"})
-            
+
+
+        
