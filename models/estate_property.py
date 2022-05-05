@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
@@ -23,7 +24,6 @@ class EstateProperty(models.Model):
         return fields.Date.context_today(self) + relativedelta(months=3)
 
 # --------------------------------------- Declaração de Campos ----------------------------------
-=======
     name = fields.Char(String="name", default="Novo")
     description = fields.Text(String="description")
     last_seen = fields.Datetime("Last Seen", default=lambda self: fields.Datetime.now())
@@ -260,7 +260,7 @@ class EstatePropertyOffer(models.Model):
  
  # ---------------------------------------- Métodos Computados ------------------------------------
    
-)
+
     partner_id=fields.Many2one('res.partner', required=True, string="Id Salesman")
     property_id=fields.Many2one('estate.property', required=True, string="Property Id")
     validity=fields.Integer(default=7, string="Validity")
@@ -313,19 +313,3 @@ class EstatePropertyOffer(models.Model):
     def action_recusar(self):
         return self.write({"state": "recusado"})
             
-class ResUsers(models.Model):
-
-    # ---------------------------------------- Atributos Privados ---------------------------------
-
-    _inherit = "res.users"
-
-    # --------------------------------------- Declaração de Campos ----------------------------------
-
-    # Relacionais
-    property_ids = fields.One2many(
-        "estate.property", "user_id", string="Properties", domain=[("state", "in", ["novo", "oferta recebida"])]
-    )
-
-
-
-    
